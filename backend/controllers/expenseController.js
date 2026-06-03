@@ -1,40 +1,40 @@
 const Expense = require('../models/Expense')
 
-const handleExpenseRoute = async (req,res) => {
+const handleExpenseRoute = async (req, res) => {
     const { amount, category, date, note } = req.body;
 
-   try{ 
+    try {
         const expense = await Expense.create({
             amount,
             category,
             date,
             note
-    })
+        })
 
-    return res.status(201).json({
-    message: "Expense added successfully",
-    expense
-    });
+        return res.status(201).json({
+            message: "Expense added successfully",
+            expense
+        });
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return res.status(500).json({
-        message: "Internal Server Error"
-    });
+            message: "Internal Server Error"
+        });
     }
 }
 
 const sortExpenseByDate = async (req, res) => {
     try {
-        const expenses = await Expense.find({}).sort({date: -1});
+        const expenses = await Expense.find({}).sort({ date: -1 });
         return res.status(200).json({
-        expenses 
+            expenses
         })
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return res.status(500).json({
-        message: "Internal Server Error"
+            message: "Internal Server Error"
         })
     }
 }
@@ -43,11 +43,11 @@ const deleteExpense = async (req, res) => {
     try {
         const id = req.params.id;
         await Expense.findByIdAndDelete(id);
-        return res.status(200).json({message : "Expense deleted successfully"});
-    } catch(error){
+        return res.status(200).json({ message: "Expense deleted successfully" });
+    } catch (error) {
         console.log(error);
         return res.status(500).json({
-        message: "Internal Server Error"
+            message: "Internal Server Error"
         })
     }
 }
@@ -57,14 +57,14 @@ const updateExpense = async (req, res) => {
         await Expense.findByIdAndUpdate(
             id,
             req.body,
-            {new : true}
+            { new: true }
         );
-        return res.status(200).json({message : "Expense updated successfully"});
+        return res.status(200).json({ message: "Expense updated successfully" });
 
-    } catch(error){
+    } catch (error) {
         console.log(error);
         return res.status(500).json({
-        message: "Internal Server Error"
+            message: "Internal Server Error"
         })
     }
 }
@@ -79,11 +79,9 @@ const expenseSummary = async (req, res) => {
 
         const highestExpense =
             expense.length > 0
-                ? expense.reduce((highest, item) =>
-                      item.amount > highest.amount
-                          ? item
-                          : highest
-                  )
+                ? expense.reduce((highest, expense) =>
+                    expense.amount > highest.amount ? expense : highest
+                )
                 : null;
 
         const categoryTotals = {};
@@ -109,4 +107,4 @@ const expenseSummary = async (req, res) => {
         });
     }
 };
-module.exports = {handleExpenseRoute, sortExpenseByDate, deleteExpense, updateExpense, expenseSummary};
+module.exports = { handleExpenseRoute, sortExpenseByDate, deleteExpense, updateExpense, expenseSummary };
