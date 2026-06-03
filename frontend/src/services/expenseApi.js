@@ -16,7 +16,7 @@ export const deleteExpense = async (id) => {
 };
 export const getSummary = async () => {
     const response = await axios.get(
-        `${BASE_URL}/api/expenses/getSummary`
+        `${BASE_URL}/api/expenses/summary`
     );
 
     return response.data;
