@@ -1,29 +1,29 @@
 import axios from "axios"
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/expenses`;
 
 export const getExpenses = async () => {
-    const response = await axios.get(API);
+    const response = await axios.get(BASE_URL);
     return response.data;
 }
 export const createExpense = async (expenseData) => {
-    const response = await axios.post(API, expenseData);
+    const response = await axios.post(BASE_URL, expenseData);
     return response.data;
 };
 export const deleteExpense = async (id) => {
-    const response = await axios.delete(`${BASE_URL}/api/expenses/${id}`);
+    const response = await axios.delete(`${BASE_URL}${id}`);
     return response.data;
 };
 export const getSummary = async () => {
     const response = await axios.get(
-        `${BASE_URL}/api/expenses/summary`
+        `${BASE_URL}/summary`
     );
 
     return response.data;
 };
 export const updateExpense = async (id, expenseData) => {
     const response = await axios.put(
-        `${API}/${id}`,
+        `${BASE_URL}/${id}`,
         expenseData
     );
 
