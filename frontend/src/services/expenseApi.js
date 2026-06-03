@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API = import.meta.env.VITE_API_URL;
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getExpenses = async () => {
     const response = await axios.get(API);
@@ -11,12 +11,12 @@ export const createExpense = async (expenseData) => {
     return response.data;
 };
 export const deleteExpense = async (id) => {
-    const response = await axios.delete(`${API}/${id}`);
+    const response = await axios.delete(`${BASE_URL}/api/expenses/${id}`);
     return response.data;
 };
 export const getSummary = async () => {
     const response = await axios.get(
-        "http://localhost:5000/api/expenses/summary"
+        `${BASE_URL}/api/expenses/getSummary`
     );
 
     return response.data;
