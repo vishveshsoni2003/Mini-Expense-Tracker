@@ -71,32 +71,42 @@ const updateExpense = async (req, res) => {
 const expenseSummary = async (req, res) => {
     try {
         const expense = await Expense.find({});
-        const totalSpent = expense.reduce((sum, expense) => {
-            return sum + expense.amount;
-        }, 0);
-        const highestExpense = expense.reduce((highest, expense) => {
-            return expense.amount > highest.amount ? expense : highest;
-        });
+
+        const totalSpent = expense.reduce(
+            (sum, item) => sum + item.amount,
+            0
+        );
+
+        const highestExpense =
+            expense.length > 0
+                ? expense.reduce((highest, item) =>
+                      item.amount > highest.amount
+                          ? item
+                          : highest
+                  )
+                : null;
+
         const categoryTotals = {};
-        expense.forEach((expense) => {
-            if(!categoryTotals[expense.category]){
-                categoryTotals[expense.category] = 0;
+
+        expense.forEach((item) => {
+            if (!categoryTotals[item.category]) {
+                categoryTotals[item.category] = 0;
             }
 
-            categoryTotals[expense.category] += expense.amount;
-        })
-        return res.status(200).json({
-            totalSpent, 
-            highestExpense,
-            categoryTotals
+            categoryTotals[item.category] += item.amount;
         });
 
-    } catch(error){
+        return res.status(200).json({
+            totalSpent,
+            highestExpense,
+            categoryTotals,
+        });
+    } catch (error) {
         console.log(error);
-        return res.status(500).json({
-        message: "Internal Server Error"
-        })
-    }
-}
 
+        return res.status(500).json({
+            message: "Internal Server Error",
+        });
+    }
+};
 module.exports = {handleExpenseRoute, sortExpenseByDate, deleteExpense, updateExpense, expenseSummary};

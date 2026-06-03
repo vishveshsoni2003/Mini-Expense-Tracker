@@ -11,7 +11,7 @@ export const createExpense = async (expenseData) => {
     return response.data;
 };
 export const deleteExpense = async (id) => {
-    const response = await axios.delete(`${BASE_URL}${id}`);
+    const response = await axios.delete(`${BASE_URL}/${id}`);
     return response.data;
 };
 export const getSummary = async () => {
