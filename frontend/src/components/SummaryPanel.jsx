@@ -17,14 +17,14 @@ const SummaryPanel = ({ summary }) => {
       <div className="bg-white rounded-xl shadow-md p-6">
         <h3 className="text-gray-500">Highest Expense</h3>
         <p className="text-2xl font-bold">
-          ₹{summary.highestExpense.amount}
+          ₹{summary.highestExpense?.amount || 0}
         </p>
       </div>
 
       <div className="bg-white rounded-xl shadow-md p-6">
         <h3 className="text-gray-500">Top Category</h3>
         <p className="text-2xl font-bold">
-          {Object.keys(summary.categoryTotals)[0]}
+          {Object.keys(summary.categoryTotals||{})[0] || "N/A"}
         </p>
       </div>
       </div>
