@@ -5,6 +5,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Cell
 } from "recharts";
 
 const ExpenseChart = ({ summary }) => {
@@ -16,7 +17,13 @@ const ExpenseChart = ({ summary }) => {
     name: category,
     value: amount,
   }));
-
+  const COLORS = [
+    "#3B82F6",
+    "#10B981",
+    "#F59E0B",
+    "#EF4444",
+    "#8B5CF6"
+  ];
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
@@ -25,7 +32,14 @@ const ExpenseChart = ({ summary }) => {
           dataKey="value"
           nameKey="name"
           outerRadius={100}
-        />
+        >
+          {chartData.map((entry, index) => (
+            <Cell
+              key={index}
+              fill={COLORS[index % COLORS.length]}
+            />
+          ))}
+        </Pie>
         <Tooltip />
         <Legend />
       </PieChart>

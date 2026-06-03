@@ -2,10 +2,10 @@ import React from 'react'
 
 const ExpenseTable = ({ expenses, onDelete, onEdit }) => {
   return (
-    <>
-      <table>
-        <thead>
-          <tr>
+    <div className="bg-white rounded-xl shadow-md p-6 overflow-x-auto">
+      <table className="w-full">
+        <thead className="bg-gray-100 p-3 text-left">
+          <tr className="p-3 border-b">
             <th>Date</th>
             <th>Category</th>
             <th>Amount</th>
@@ -17,8 +17,10 @@ const ExpenseTable = ({ expenses, onDelete, onEdit }) => {
 
         <tbody>
           {expenses.map((expense) => (
-            <tr key={expense._id}>
-              <td>{expense.date}</td>
+            <tr className="p-3 border-b" key={expense._id}>
+              <td>
+                {new Date(expense.date).toLocaleDateString("en-IN")}
+              </td>
               <td>{expense.category}</td>
               <td>
                 {new Intl.NumberFormat("en-IN", {
@@ -28,12 +30,12 @@ const ExpenseTable = ({ expenses, onDelete, onEdit }) => {
               </td>
               <td>{expense.note}</td>
               <td>
-                <button onClick={() => onDelete(expense._id)}>
+                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onClick={() => onDelete(expense._id)}>
                   Delete
                 </button>
               </td>
               <td>
-                <button
+                <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
                   onClick={() => onEdit(expense)}
                 >
                   Edit
@@ -44,7 +46,7 @@ const ExpenseTable = ({ expenses, onDelete, onEdit }) => {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   )
 }
 

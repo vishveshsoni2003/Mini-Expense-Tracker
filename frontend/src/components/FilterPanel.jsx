@@ -7,7 +7,7 @@ const FilterPanel = ({
     setEndDate
 }) => {
   return (
-    <div>
+    <div className="bg-white rounded-xl shadow-md p-6">
       <label>Start Date</label>
       <input
         type="date"

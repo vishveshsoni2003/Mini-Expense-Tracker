@@ -81,10 +81,12 @@ const Dashboard = () => {
         fetchSummary();
     }, [])
     return (
-        <>
-             <h1>Expense Tracker</h1>
+        <div className="max-w-6xl mx-auto p-6 space-y-6 min-h-screen bg-gray-100">
+            <h1 className="text-4xl font-bold text-center">Expense Tracker</h1>
             <SummaryPanel summary={summary} />
-            <ExpenseChart summary={summary} />
+            <div className="bg-white rounded-xl shadow-md p-5">
+                <ExpenseChart summary={summary} />
+            </div>
             <ExpenseForm onSubmitExpense={handleAddExpense} editingExpense={editingExpense}
             />
             <FilterPanel
@@ -96,7 +98,7 @@ const Dashboard = () => {
                 setEndDate={setEndDate}
             />
             <ExpenseTable expenses={filteredExpenses} onDelete={handleDeleteExpense} onEdit={setEditingExpense} />
-        </>
+        </div>
     )
 }
 
