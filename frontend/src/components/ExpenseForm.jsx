@@ -1,7 +1,7 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const ExpenseForm = ({ onSubmitExpense }) => {
+const ExpenseForm = ({ onSubmitExpense, editingExpense }) => {
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
@@ -20,6 +20,18 @@ const ExpenseForm = ({ onSubmitExpense }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+     if (Number(formData.amount) <= 0) {
+        alert("Amount must be greater than 0");
+        return;
+    }
+
+    const today = new Date();
+    const selectedDate = new Date(formData.date);
+
+    if (selectedDate > today) {
+        alert("Future dates are not allowed");
+        return;
+    }
 
     await onSubmitExpense(formData);
 
@@ -30,6 +42,16 @@ const ExpenseForm = ({ onSubmitExpense }) => {
       note: "",
     });
   };
+  useEffect(() => {
+    if(editingExpense){
+        setFormData({
+            amount: editingExpense.amount,
+            category: editingExpense.category,
+            date: editingExpense.date.split("T")[0],
+            note: editingExpense.note
+        });
+    }
+}, [editingExpense]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -40,6 +62,7 @@ const ExpenseForm = ({ onSubmitExpense }) => {
         <input
           type="number"
           name="amount"
+          min="1"
           value={formData.amount}
           onChange={handleChange}
           required
@@ -83,7 +106,9 @@ const ExpenseForm = ({ onSubmitExpense }) => {
         />
       </div>
 
-      <button type="submit">Add Expense</button>
+      <button type="submit">
+        {editingExpense ? "Update Expense" : "Add Expense"}
+      </button>
     </form>
   );
 };
