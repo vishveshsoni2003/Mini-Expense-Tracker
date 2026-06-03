@@ -26,7 +26,10 @@ const ExpenseForm = ({ onSubmitExpense, editingExpense }) => {
     }
 
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const selectedDate = new Date(formData.date);
+    selectedDate.setHours(0, 0, 0, 0);
 
     if (selectedDate > today) {
       alert("Future dates are not allowed");
@@ -90,13 +93,13 @@ const ExpenseForm = ({ onSubmitExpense, editingExpense }) => {
           </div>
 
           <div>
-            <label>Date</label>
             <input
               className="w-full border rounded-lg p-2"
               type="date"
               name="date"
               value={formData.date}
               onChange={handleChange}
+              max={new Date().toISOString().split("T")[0]}
               required
             />
           </div>
@@ -119,7 +122,7 @@ const ExpenseForm = ({ onSubmitExpense, editingExpense }) => {
         rounded-lg
         hover:bg-blue-700 cursor-pointer
         "type="submit">
-        {editingExpense ? "Update Expense" : "Add Expense"}
+          {editingExpense ? "Update Expense" : "Add Expense"}
         </button>
       </form>
     </div>
